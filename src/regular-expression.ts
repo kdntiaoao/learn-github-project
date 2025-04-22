@@ -22,6 +22,18 @@ function notStartsWith({
   return reg.test(targetString);
 }
 
+// 後方一致
+function endsWith({
+  targetString,
+  searchString,
+}: {
+  targetString: string;
+  searchString: string;
+}): boolean {
+  const reg = new RegExp(`${searchString}$`);
+  return reg.test(targetString);
+}
+
 if (import.meta.vitest) {
   const { test, expect, describe } = import.meta.vitest;
 
@@ -46,6 +58,15 @@ if (import.meta.vitest) {
       expect(notStartsWith({ targetString: "abc", searchString: "a" })).toBe(
         false
       );
+    });
+  });
+
+  describe("endsWith", () => {
+    test("targetString に searchString が含まれているときは true を返す", () => {
+      expect(endsWith({ targetString: "abc", searchString: "c" })).toBe(true);
+    });
+    test("targetString に searchString が含まれていないときは false を返す", () => {
+      expect(endsWith({ targetString: "abc", searchString: "b" })).toBe(false);
     });
   });
 }
