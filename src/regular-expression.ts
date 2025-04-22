@@ -34,6 +34,18 @@ function endsWith({
   return reg.test(targetString);
 }
 
+// 後方不一致
+function notEndsWith({
+  targetString,
+  searchString,
+}: {
+  targetString: string;
+  searchString: string;
+}): boolean {
+  const reg = new RegExp(`(?<!${searchString})$`);
+  return reg.test(targetString);
+}
+
 if (import.meta.vitest) {
   const { test, expect, describe } = import.meta.vitest;
 
@@ -67,6 +79,19 @@ if (import.meta.vitest) {
     });
     test("targetString に searchString が含まれていないときは false を返す", () => {
       expect(endsWith({ targetString: "abc", searchString: "b" })).toBe(false);
+    });
+  });
+
+  describe("notEndsWith", () => {
+    test("targetString に searchString が含まれていないときは true を返す", () => {
+      expect(notEndsWith({ targetString: "abc", searchString: "b" })).toBe(
+        true
+      );
+    });
+    test("targetString に searchString が含まれているときは false を返す", () => {
+      expect(notEndsWith({ targetString: "abc", searchString: "c" })).toBe(
+        false
+      );
     });
   });
 }
