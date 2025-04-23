@@ -1,5 +1,5 @@
 // 前方一致
-function startsWith({
+export function startsWith({
   targetString,
   searchString,
 }: {
@@ -11,7 +11,7 @@ function startsWith({
 }
 
 // 前方不一致
-function notStartsWith({
+export function notStartsWith({
   targetString,
   searchString,
 }: {
@@ -23,7 +23,7 @@ function notStartsWith({
 }
 
 // 後方一致
-function endsWith({
+export function endsWith({
   targetString,
   searchString,
 }: {
@@ -35,7 +35,7 @@ function endsWith({
 }
 
 // 後方不一致
-function notEndsWith({
+export function notEndsWith({
   targetString,
   searchString,
 }: {
@@ -44,54 +44,4 @@ function notEndsWith({
 }): boolean {
   const reg = new RegExp(`(?<!${searchString})$`);
   return reg.test(targetString);
-}
-
-if (import.meta.vitest) {
-  const { test, expect, describe } = import.meta.vitest;
-
-  describe("startsWith", () => {
-    test("targetString に searchString が含まれているときは true を返す", () => {
-      expect(startsWith({ targetString: "abc", searchString: "a" })).toBe(true);
-    });
-    test("targetString に searchString が含まれていないときは false を返す", () => {
-      expect(startsWith({ targetString: "abc", searchString: "b" })).toBe(
-        false
-      );
-    });
-  });
-
-  describe("notStartsWith", () => {
-    test("targetString に searchString が含まれていないときは true を返す", () => {
-      expect(notStartsWith({ targetString: "abc", searchString: "b" })).toBe(
-        true
-      );
-    });
-    test("targetString に searchString が含まれているときは false を返す", () => {
-      expect(notStartsWith({ targetString: "abc", searchString: "a" })).toBe(
-        false
-      );
-    });
-  });
-
-  describe("endsWith", () => {
-    test("targetString に searchString が含まれているときは true を返す", () => {
-      expect(endsWith({ targetString: "abc", searchString: "c" })).toBe(true);
-    });
-    test("targetString に searchString が含まれていないときは false を返す", () => {
-      expect(endsWith({ targetString: "abc", searchString: "b" })).toBe(false);
-    });
-  });
-
-  describe("notEndsWith", () => {
-    test("targetString に searchString が含まれていないときは true を返す", () => {
-      expect(notEndsWith({ targetString: "abc", searchString: "b" })).toBe(
-        true
-      );
-    });
-    test("targetString に searchString が含まれているときは false を返す", () => {
-      expect(notEndsWith({ targetString: "abc", searchString: "c" })).toBe(
-        false
-      );
-    });
-  });
 }
